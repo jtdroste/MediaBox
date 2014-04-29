@@ -55,12 +55,12 @@ class HomeController extends AppController {
 		}
 	}
 
-	public function plex_proxy($id1=false, $id2=false) {
+	public function plex_proxy($id=false) {
 		$this->protect();
 		if ( !$this->Config->get('plex_enabled', false) ) {
 			throw new ForbiddenException('Plex is disabled');
 		}
-		if ( !is_numeric($id1) || !is_numeric($id2) ) {
+		if ( !is_numeric($id) ) {
 			throw new ForbiddenException('Invalid ID passed');
 		}
 
@@ -68,7 +68,7 @@ class HomeController extends AppController {
 		$port   = $this->Config->get('plex_port');
 
 		$url    = 'http://'.$host.':'.$port.'/photo/:/transcode?url=';
-		$url   .= 'http://127.0.0.1:'.$port.'/library/metadata/'.$id1.'/thumb/'.$id2;
+		$url   .= 'http://127.0.0.1:'.$port.'/library/metadata/'.$id.'/thumb';
 		$url   .= '&width=200&height=300';
 		$image  = file_get_contents($url);
 

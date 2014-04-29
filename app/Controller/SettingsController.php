@@ -95,21 +95,24 @@ class SettingsController extends AppController {
 			$value = $this->request->data['value'];
 
 			if ( in_array($field, array('id')) ) {
-				$this->set('message', 'Invalid field passed.');
+				$this->response->body('Invalid field passed.');
 				$this->response->statusCode(400);
-				return;
+				
+				return $this->response;
 			}
 
 			if ( in_array($field, array('privacy_level')) && !is_numeric($value)) {
-				$this->set('message', 'This field has to be a numeric value!');
+				$this->response->body('This field has to be a numeric value!');
 				$this->response->statusCode(400);
-				return;
+				
+				return $this->response;
 			}
 
 			if ( $field = 'permissions' ) {
-				$this->set('message', 'todo');
+				$this->response->body('ToDo');
 				$this->response->statusCode(400);
-				return;
+				
+				return $this->response;
 			}
 
 			if ( $field == 'password' && !empty($value) ) {

@@ -2,7 +2,7 @@
 $this->Html->script('jquery.film_roll.min.js', array('inline' => false));
 ?>
 
-<?php if ( isset($setup_mediabox_warning) && $setup_mediabox_warning ) : ?>
+<?php if ( isset($setup_mediabox_warning) && $setup_mediabox_warning && in_array('Administrator', $userperms) ) : ?>
 <div class="alert alert-dismissable alert-warning">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
 	<h4>Warning!</h4>
@@ -26,14 +26,13 @@ $this->Html->script('jquery.film_roll.min.js', array('inline' => false));
 		<?php
 		foreach ( $latest_media AS $i => $item ) :
 		if ( $i > 10 ) break; //10 max
-		list(,,,$id1,,$id2) = explode('/', $item->getThumb());
 		
 		$url = 
 			($item->getType() == 'season') ? 
 			'/tv/view/'.$item->getParentRatingKey().'/'.$item->getRatingKey() : 
 			'/movies/view/'.$item->getRatingKey();
 		?>
-		<div><a href="<?php echo $this->Html->url($url); ?>"><img src="<?php echo $this->Html->url('/home/plex_proxy/'.$id1.'/'.$id2); ?>" /></a></div>
+		<div><a href="<?php echo $this->Html->url($url); ?>"><img src="<?php echo $this->Html->url('/home/plex_proxy/'.$item->getRatingKey()); ?>" /></a></div>
 		<?php endforeach; ?>
 	</div>
 </div>
@@ -57,9 +56,9 @@ $(document).ready(function() {
 		foreach ( $recently_watched AS $item ) :
 
 		if ( $item['item']->getType() == 'episode' ) {
-			list(,,,$id1,,$id2) = explode('/', $item['item']->getParentThumb());
+			$id = $item['item']->getParentRatingKey();
 		} else {
-			list(,,,$id1,,$id2) = explode('/', $item['item']->getThumb());
+			$id = $item['item']->getRatingKey();
 		}
 
 		$url = 
@@ -67,7 +66,7 @@ $(document).ready(function() {
 			'/tv/view/'.$item['item']->getGrandparentRatingKey().'/'.$item['item']->getParentRatingKey().'/'.$item['item']->getRatingKey() : 
 			'/movies/view/'.$item['item']->getRatingKey();
 		?>
-		<div><a href="<?php echo $this->Html->url($url); ?>"><img src="<?php echo $this->Html->url('/home/plex_proxy/'.$id1.'/'.$id2); ?>" /></a></div>
+		<div><a href="<?php echo $this->Html->url($url); ?>"><img src="<?php echo $this->Html->url('/home/plex_proxy/'.$id); ?>" /></a></div>
 		<?php endforeach; ?>
 	</div>
 </div>
