@@ -108,7 +108,7 @@ class SettingsController extends AppController {
 				return $this->response;
 			}
 
-			if ( $field = 'permissions' ) {
+			if ( $field == 'permissions' ) {
 				$this->response->body('ToDo');
 				$this->response->statusCode(400);
 				
