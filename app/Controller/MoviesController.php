@@ -1,6 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 App::import('Vendor', 'php-plex/Plex');
+App::import('Vendor', 'PlexWatch');
 
 /**
  * Movies Controller
@@ -44,6 +45,7 @@ class MoviesController extends AppController {
 		}
 
 		$this->setupPlex();
+		$plexWatch = new PlexWatch($this->Config->get('plexwatch_db'));
 
 		try {
 			$movie = $this->plex->getServer('server')->getLibrary()->getSection('Movies')->getMovie('/library/metadata/'.$id);
@@ -51,28 +53,10 @@ class MoviesController extends AppController {
 			throw new NotFoundException('Sorry, I could not find the movie you are looking for.');
 		}
 
-		$this->set('movie', $movie);
-	}
+		$this->set('media', $movie);
+		$this->set('history', $plexWatch->getWatchingHistory($id));
 
-	public function art($id) {
-		if ( !is_numeric($id) ) {
-			throw new ForbiddenException('Invalid ID passed');
-		}
-
-		$host   = $this->Config->get('plex_host');
-		$port   = $this->Config->get('plex_port');
-
-		//$url    = 'http://'.$host.':'.$port.'/photo/:/transcode?url=';
-		//$url   .= 'http://127.0.0.1:'.$port.'/library/metadata/'.$id.'/art';
-		//$url   .= '&width=960&height=540';
-		
-		$url    = 'http://'.$host.':'.$port.'/library/metadata/'.$id.'/art';
-		$image  = file_get_contents($url);
-
-		$this->response->body($image);
-		$this->response->type('image/jpeg');
-
-		return $this->response;
+		$this->render('/Media/view');
 	}
 
 	public function watch($id=false) {

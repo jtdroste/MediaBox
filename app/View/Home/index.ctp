@@ -32,7 +32,7 @@ $this->Html->script('jquery.film_roll.min.js', array('inline' => false));
 			'/tv/view/'.$item->getParentRatingKey().'/'.$item->getRatingKey() : 
 			'/movies/view/'.$item->getRatingKey();
 		?>
-		<div><a href="<?php echo $this->Html->url($url); ?>"><img src="<?php echo $this->Html->url('/home/plex_proxy/'.$item->getRatingKey()); ?>" /></a></div>
+		<div><a href="<?php echo $this->Html->url($url); ?>"><img src="<?php echo $this->Html->url('/home/plex_proxy/thumb/'.$item->getRatingKey()); ?>" /></a></div>
 		<?php endforeach; ?>
 	</div>
 </div>
@@ -66,7 +66,7 @@ $(document).ready(function() {
 			'/tv/view/'.$item['item']->getGrandparentRatingKey().'/'.$item['item']->getParentRatingKey().'/'.$item['item']->getRatingKey() : 
 			'/movies/view/'.$item['item']->getRatingKey();
 		?>
-		<div><a href="<?php echo $this->Html->url($url); ?>"><img src="<?php echo $this->Html->url('/home/plex_proxy/'.$id); ?>" /></a></div>
+		<div><a href="<?php echo $this->Html->url($url); ?>"><img src="<?php echo $this->Html->url('/home/plex_proxy/thumb/'.$id); ?>" /></a></div>
 		<?php endforeach; ?>
 	</div>
 </div>

@@ -11,7 +11,7 @@
 				<div class="row">
 					<div class="col-md-3">
 						<a href="<?php echo $this->Html->url('/movies/view/'.$movie->getRatingKey()); ?>">
-							<img src="<?php echo $this->Html->url('/home/plex_proxy/'.$movie->getRatingKey()); ?>" />
+							<img src="<?php echo $this->Html->url('/home/plex_proxy/thumb/'.$movie->getRatingKey()); ?>" />
 						</a>
 					</div>
 					<div class="col-md-6">

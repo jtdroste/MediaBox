@@ -55,4 +55,18 @@ class PlexWatch {
 
 		return $return;
 	}
+
+	public function getWatchingHistory($id) {
+		$query = $this->db->prepare('SELECT * FROM grouped WHERE ratingKey = :id ORDER BY time DESC');
+		$query->bindValue(':id', $id, SQLITE3_INTEGER);
+
+		$result = $query->execute();
+		$return = array();
+
+		while ( $row = $result->fetchArray() ) {
+			$return[] = $row;
+		}
+
+		return $return;
+	}
 }

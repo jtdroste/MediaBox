@@ -35,6 +35,10 @@
 /*
  * TODO: Broken for mobile, tablet
  */
+.media-header {
+	padding-bottom: 10px
+}
+
 .media-header .carousel-caption {
 	left: 0;
 	right: 0;
@@ -48,6 +52,22 @@
 
 .media-header .carousel-caption .col-md-3 {
 	top: -20px;
+}
+
+.media-header .carousel-caption .row {
+	margin-right: 0px;
+}
+
+.media-history .panel-body .table {
+	text-align: center;
+}
+
+.stream-information .header {
+	text-align: center;
+}
+
+.stream-information .modal-footer {
+	text-align: center;
 }
 
 /*

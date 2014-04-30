@@ -60,19 +60,23 @@ class HomeController extends AppController {
 		}
 	}
 
-	public function plex_proxy($id=false) {
+	public function plex_proxy($type=false, $id=false) {
 		$this->requires('Plex', 'plex_enabled');
 		
-		if ( !is_numeric($id) ) {
+		if ( !is_numeric($id) || $type == false ) {
 			throw new ForbiddenException('Invalid ID passed');
 		}
 
-		$host   = $this->Config->get('plex_host');
-		$port   = $this->Config->get('plex_port');
+		$host = $this->Config->get('plex_host');
+		$port = $this->Config->get('plex_port');
 
-		$url    = 'http://'.$host.':'.$port.'/photo/:/transcode?url=';
-		$url   .= 'http://127.0.0.1:'.$port.'/library/metadata/'.$id.'/thumb';
-		$url   .= '&width=200&height=300';
+		$url  = '/library/metadata/'.$id.'/'.$type;
+
+		if ( $type == 'thumb' ) {
+			$url = '/photo/:/transcode?url=http://127.0.0.1:'.$port.$url.'&width=200&height=300';
+		}
+
+		$url  = 'http://'.$host.':'.$port.$url;
 		$image  = file_get_contents($url);
 
 		$this->response->body($image);
