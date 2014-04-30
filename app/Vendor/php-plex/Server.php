@@ -46,6 +46,11 @@ class Plex_Server extends Plex_MachineAbstract
 	const ENDPOINT_CLIENT = 'clients';
 
 	/**
+	 * The Plex HTTP API endpoint for server listing.
+	 */
+	const ENDPOINT_SERVER = 'servers';
+
+	/**
 	 * Sets up our Plex server using the minimum amount of data required to
 	 * interact.
 	 *
@@ -83,12 +88,12 @@ class Plex_Server extends Plex_MachineAbstract
 	 * @return Plex_Client[] An array of Plex clients indexed by the Plex client
 	 * name.
 	 */
-	public function getClients()
+	public function getClients($endpoint=self::ENDPOINT_CLIENT)
 	{
 		$url = sprintf(
 			'%s/%s',
 			$this->getBaseUrl(),
-			self::ENDPOINT_CLIENT
+			$endpoint
 		);
 		
 		$clients = array();

@@ -64,6 +64,22 @@ class MoviesController extends AppController {
 		if ( !is_numeric($id) ) {
 			$this->redirect('/movies');
 		}
+
+		$this->setupPlex();
+
+		$servers = $this->plex->getServer('server')->getClients(Plex_Server::ENDPOINT_SERVER);
+		$server  = current($servers);
+
+		$url = sprintf(
+				'http://plex.tv/web/?fragment=!/server/%s/details/%slibrary%smetadata%s%s', 
+				$server->getMachineIdentifier(), 
+				'%252F',
+				'%252F',
+				'%252F',
+				$id
+			);
+
+		$this->redirect($url);
 	}
 
 	private function setupPlex() {
