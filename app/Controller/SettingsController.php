@@ -78,7 +78,7 @@ class SettingsController extends AppController {
 	}
 
 	public function user($id=false) {
-		if ( !is_numeric($id) || $id == false ) {
+		if ( !is_numeric($id) ) {
 			$this->redirect('/settings/users', 400);
 		}
 		$userinfo = $this->User->findById($id);

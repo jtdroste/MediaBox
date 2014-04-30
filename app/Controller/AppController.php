@@ -90,4 +90,10 @@ class AppController extends Controller {
 			throw new ForbiddenException('You have to be logged in to do that.');
 		}
 	}
+
+	protected function requires($name, $key) {
+		if ( !$this->Config->get($key, false) ) {
+			throw new InternalErrorException($name.' support is disabled. This page requires '.$name.' support to be enabled.');
+		}
+	}
 }

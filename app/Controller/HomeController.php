@@ -12,10 +12,15 @@ App::import('Vendor', 'PlexWatch');
  */
 class HomeController extends AppController {
 	public $components = array('Session');
-	public $uses = array('User', 'Config');
+	public $uses       = array('User', 'Config');
+
+	public function beforeFilter() {
+		parent::beforeFilter();
+
+		$this->protect();
+	}
 
 	public function index() {
-		$this->protect();
 		$this->set('title', 'MediaBox - Home');
 
 		if ( !$this->Config->get('mediabox_setup', false) ) {
@@ -56,10 +61,8 @@ class HomeController extends AppController {
 	}
 
 	public function plex_proxy($id=false) {
-		$this->protect();
-		if ( !$this->Config->get('plex_enabled', false) ) {
-			throw new ForbiddenException('Plex is disabled');
-		}
+		$this->requires('Plex', 'plex_enabled');
+		
 		if ( !is_numeric($id) ) {
 			throw new ForbiddenException('Invalid ID passed');
 		}
