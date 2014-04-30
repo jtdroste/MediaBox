@@ -23,13 +23,13 @@ class AppSchema extends CakeSchema {
 					$this->_create('Config', array('name' => 'sickbeard_enabled', 'value' => 'false', 'description' => 'Enable SickBeard Support?'));
 					$this->_create('Config', array('name' => 'sickbeard_host', 'value' => '127.0.0.1', 'description' => 'What is SickBeard\'s host? (Usually 127.0.0.1)'));
 					$this->_create('Config', array('name' => 'sickbeard_port', 'value' => '8081', 'description' => 'What port is SickBeard running on? (Usually 8081)'));
-					$this->_create('Config', array('name' => 'sickbeard_apikey', 'value' => 'false', 'description' => 'What is SickBeard\'s API Key? You can find it in the settings.'));
+					$this->_create('Config', array('name' => 'sickbeard_apikey', 'value' => 'APIKey', 'description' => 'What is SickBeard\'s API Key? You can find it in the settings.'));
 
 					// CouchPotato Config
 					$this->_create('Config', array('name' => 'couchpotato_enabled', 'value' => 'false', 'description' => 'Enable CouchPotato Support?'));
 					$this->_create('Config', array('name' => 'couchpotato_host', 'value' => '127.0.0.1', 'description' => 'What is CouchPotato\'s host? (Usually 127.0.0.1)'));
 					$this->_create('Config', array('name' => 'couchpotato_port', 'value' => '5050', 'description' => 'What port is CouchPotato running on? (Usually 5050)'));
-					$this->_create('Config', array('name' => 'couchpotato_apikey', 'value' => 'false', 'description' => 'What is CouchPotato\'s API Key? You can find it in the settings.'));
+					$this->_create('Config', array('name' => 'couchpotato_apikey', 'value' => 'APIKey', 'description' => 'What is CouchPotato\'s API Key? You can find it in the settings.'));
 
 					// Plex Config
 					$this->_create('Config', array('name' => 'plex_enabled', 'value' => 'false', 'description' => 'Enable Plex Support?'));

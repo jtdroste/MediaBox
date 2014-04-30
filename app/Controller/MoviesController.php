@@ -2,6 +2,7 @@
 App::uses('AppController', 'Controller');
 App::import('Vendor', 'php-plex/Plex');
 App::import('Vendor', 'PlexWatch');
+App::import('Vendor', 'CouchPotato');
 
 /**
  * Movies Controller
@@ -27,15 +28,53 @@ class MoviesController extends AppController {
 	public function index() {
 		$this->setupPlex();
 
+		$this->set('title', 'MediaBox - Movie List');
 		$this->set('movies', $this->plex->getServer('server')->getLibrary()->getSection('Movies')->getAllMovies());
-	}
-
-	public function schedule() {
-		$this->requires('CouchPotato', 'couchpotato_enabled');
 	}
 
 	public function upcoming() {
 		$this->requires('CouchPotato', 'couchpotato_enabled');
+		$host = $this->Config->get('couchpotato_host');
+		$port = $this->Config->get('couchpotato_port');
+		$key  = $this->Config->get('couchpotato_apikey');
+
+		$couchpotato = new CouchPotato($key, $host, $port);
+
+		$soonArr = $couchpotato->dashboard_soon();
+		$soon = array();
+
+		foreach ( $soonArr['movies'] AS $data ) {
+			$library = $data['library']['info'];
+			$title   = $library['titles'][0];
+			$plot    = $data['library']['plot'];
+			$rating  = $library['mpaa'];
+			$runtime = $library['runtime'];
+			$release = isset($library['release_date']['dvd']) ? $library['release_date']['dvd'] : 0;
+			$poster  = $library['images']['poster_original'][0];
+			$rated   = isset($library['rating']['imdb'][0]) ? $library['rating']['imdb'][0] : -1;
+			$imdb    = $library['imdb'];
+
+			if ( $release <= 0 ) continue; // Incorrect data was fetched
+
+			$soon[] = array(
+				'title'   => $title,
+				'plot'    => $plot,
+				'rating'  => $rating,
+				'runtime' => $runtime,
+				'release' => $release,
+				'poster'  => $poster,
+				'rated'   => $rated,
+				'imdb'    => $imdb,
+			);
+		}
+
+		$sort = function($a, $b) {
+			return $a['release'] - $b['release'];
+		};
+		usort($soon, $sort);
+
+		$this->set('title', 'MediaBox - Movies - Coming Soon');
+		$this->set('soon', $soon);
 	}
 
 	public function view($id=false) {
@@ -53,6 +92,7 @@ class MoviesController extends AppController {
 			throw new NotFoundException('Sorry, I could not find the movie you are looking for.');
 		}
 
+		$this->set('title', 'MediaBox - Movie - '.$movie->getTitle());
 		$this->set('media', $movie);
 		$this->set('history', $plexWatch->getWatchingHistory($id));
 

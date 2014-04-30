@@ -41,7 +41,6 @@
 					<a href="<?php echo $this->Html->url('/movies'); ?>" class="dropdown-toggle" data-toggle="dropdown">Movies <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo $this->Html->url('/movies'); ?>">Movie List</a></li>
-						<li><a href="<?php echo $this->Html->url('/movies/schedule'); ?>">Movie Schedule</a></li>
 						<li><a href="<?php echo $this->Html->url('/movies/upcoming'); ?>">Upcoming Movies</a></li>
 						<li class="divider"></li>
 						<li><a href="<?php echo $this->Html->url('/requests/movie'); ?>">Request Movie</a></li>
