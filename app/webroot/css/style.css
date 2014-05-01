@@ -70,6 +70,29 @@
 	text-align: center;
 }
 
+.media-list .thumbnail .caption > h3 {
+	text-align: center;
+}
+
+.media-list .panel-body .ep-number {
+	text-align: center;
+	width: 5%;
+}
+
+.media-list .panel-body .ep-name {
+	text-align: center;
+	width: 20%;
+}
+
+.media-list .panel-body .ep-summary {
+	text-align: center;
+	width: 70%;
+}
+
+.media-list .clickable:hover {
+    cursor: pointer;
+}
+
 /*
  * Film Roll Styles
  */
