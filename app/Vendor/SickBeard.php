@@ -25,7 +25,7 @@ class SickBeard {
 				$this->host,
 				$this->port,
 				$this->key,
-				http_build_query(array_merge(array('cmd' => $name), $args))
+				http_build_query(array_merge(array('cmd' => $name), $this->flatten($args)))
 			);
 		
 		$ch = curl_init();
@@ -42,5 +42,16 @@ class SickBeard {
 		curl_close($ch);
 
 		return $response;
+	}
+
+	private function flatten($arr) {
+		$return = array();
+
+		array_walk_recursive($arr, function($value, $key) use (&$return) {
+			$return[$key] = $value;
+		});
+
+
+		return $return;
 	}
 }

@@ -2,7 +2,7 @@
 App::uses('AppController', 'Controller');
 App::import('Vendor', 'php-plex/Plex');
 App::import('Vendor', 'PlexWatch');
-//App::import('Vendor', 'SickBeard');
+App::import('Vendor', 'SickBeard');
 
 /**
  * TV Controller
@@ -45,6 +45,32 @@ class TvController extends AppController {
 
 	public function schedule() {
 		$this->requires('SickBeard', 'sickbeard_enabled');
+		$host = $this->Config->get('sickbeard_host');
+		$port = $this->Config->get('sickbeard_port');
+		$key  = $this->Config->get('sickbeard_apikey');
+
+		$sickbeard = new SickBeard($key, $host, $port);
+
+		$upcomingArr = $sickbeard->future(array('type' => 'today|soon', 'paused' => 0));
+		$upcoming = array();
+
+		foreach ( $upcomingArr['data'] AS $up ) {
+			foreach ( $up AS $data ) {
+				$day = $data['weekday']-1;
+				$data['name'] = $data['ep_name'];
+				$data['plot'] = $data['ep_plot'];
+
+				if ( !isset($upcoming[$day]) )
+					$upcoming[$day] = array();
+
+				$upcoming[$day][] = $data;
+			}
+		}
+		
+		ksort($upcoming);
+
+		$this->set('title', 'MediaBox - TV Show Schedule');
+		$this->set('schedule', $upcoming);
 	}
 
 	public function view($show=false, $season=false, $episode=false) {
