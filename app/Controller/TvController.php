@@ -89,6 +89,7 @@ class TvController extends AppController {
 					}
 
 					$view_type = 'media_history';
+					$id = $episode;
 					$show = '/library/metadata/'.$show;
 					$season = '/library/metadata/'.$season;
 					$episode = '/library/metadata/'.$episode;
@@ -99,7 +100,7 @@ class TvController extends AppController {
 
 					// plexWatch
 					$plexWatch = new PlexWatch($this->Config->get('plexwatch_db'));
-					$this->set('history', $plexWatch->getWatchingHistory($episode));
+					$this->set('history', $plexWatch->getWatchingHistory($id));
 				break;
 
 				case ($season != false):

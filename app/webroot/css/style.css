@@ -58,6 +58,12 @@
 	margin-right: 0px;
 }
 
+@media (max-width: 970px) {
+	.carousel-caption .col-md-3 img {
+		display: none;
+	}
+}
+
 .media-history .panel-body .table {
 	text-align: center;
 }

@@ -51,7 +51,6 @@ class SickBeard {
 			$return[$key] = $value;
 		});
 
-
 		return $return;
 	}
 }

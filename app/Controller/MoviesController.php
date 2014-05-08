@@ -94,7 +94,7 @@ class MoviesController extends AppController {
 
 		$this->set('title', 'MediaBox - Movie - '.$movie->getTitle());
 		$this->set('media', $movie);
-		$this->set('view_type', 'history');
+		$this->set('view_type', 'media_history');
 		$this->set('history', $plexWatch->getWatchingHistory($id));
 
 		$this->render('/Media/view');
